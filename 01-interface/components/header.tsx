@@ -10,8 +10,6 @@ const Header = () => {
                     </h1>
                 </div>
             </header>
-
-            {/* Bottom line */}
             <div className="border-b border-gray-200 w-full"></div>
         </div>
     );

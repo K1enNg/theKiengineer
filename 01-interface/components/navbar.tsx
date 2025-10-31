@@ -14,9 +14,14 @@ const Navbar = () => {
                     </div>
                 </div>
 
+                <div className="flex items-center space-x-4">
                 <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors">
                     Subscribe
                 </button>
+                <div>
+                    <Link href="/signin" className="transition-colors text-color-gray-600">Are you author?</Link>
+                </div>
+                </div>
             </div>
 
             <div className="border-b border-gray-200 w-full"></div>
