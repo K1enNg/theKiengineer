@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import { Command, CommandInput, CommandList, CommandEmpty } from "@/components/ui/command";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
     return (
         <nav className="w-full">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -12,6 +13,12 @@ const Navbar = () => {
                         <Link href="/blogs" className="transition-colors">Blogs</Link>
                         <Link href="/about" className="transition-colors">About</Link>
                     </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                    <Command>
+                        <CommandInput placeholder="Search..." />
+                    </Command>
                 </div>
 
                 <div className="flex items-center space-x-4">

@@ -1,4 +1,4 @@
-const Header = () => {
+const Header: React.FC = () => {
     return (
         <div className='w-full'>
             <header className="py-16 px-4 sm:px-6 lg:px-8">
