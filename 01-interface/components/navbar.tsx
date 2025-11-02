@@ -19,7 +19,7 @@ const Navbar = () => {
                     Subscribe
                 </button>
                 <div>
-                    <Link href="/signin" className="transition-colors text-color-gray-600">Are you author?</Link>
+                    <Link href="/auth" className="transition-colors text-color-gray-600">Are you author?</Link>
                 </div>
                 </div>
             </div>
