@@ -18,19 +18,13 @@ const TextArea = () => {
         <InputGroupAddon align="block-end" className="border-t">
           <InputGroupText>Line 1, Column 1</InputGroupText>
           <InputGroupButton size="sm" className="ml-auto" variant="default">
-            Run
+            Post
           </InputGroupButton>
         </InputGroupAddon>
         <InputGroupAddon align="block-start" className="border-b">
           <InputGroupText className="font-mono font-medium">
             script.js
           </InputGroupText>
-          <InputGroupButton className="ml-auto" size="icon-xs">
-            Refresh
-          </InputGroupButton>
-          <InputGroupButton variant="ghost" size="icon-xs">
-            Copy
-          </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
     </div>
