@@ -1,4 +1,4 @@
-import { Home, Settings, PencilIcon } from "lucide-react"
+import { Home, Settings, PencilIcon, MessageCircle, BarChart, LogOut } from "lucide-react"
 
 import {
   Sidebar,
@@ -20,9 +20,19 @@ const author = {
 
 const items = [
   {
-    title: "Home",
+    title: "Articles",
     url: "/dashboard/postlist",
     icon: Home,
+  },
+  {
+    title: "Comments",
+    url: "#",
+    icon: MessageCircle,
+  },
+  {
+    title: "Analytics",
+    url: "#",
+    icon: BarChart,
   },
   {
     title: "Settings",
@@ -35,36 +45,47 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
-        <div className="flex flex-col items-center justify-center p-4">
-          <img
-            src={author.avatar}
-            alt={author.name}
-            className="w-16 h-16 rounded-full object-cover"
-          />
-          <span className="mt-2 text-sm font-medium">{author.name}</span>
+        <div className="flex h-full flex-col">
+          <div className="flex flex-col items-center justify-center p-4">
+            <img
+              src={author.avatar}
+              alt={author.name}
+              className="w-16 h-16 rounded-full object-cover"
+            />
+            <span className="mt-2 text-sm font-medium">{author.name}</span>
+          </div>
+          <Button asChild variant="outline" className="self-center flex items-center justify-center gap-2">
+            <Link href="/dashboard/compose">
+              Write
+              <PencilIcon />
+            </Link>
+          </Button>
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          <div className="mt-auto p-4">
+            <Button asChild variant="ghost" className="w-full justify-start">
+              <Link href="/">
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </Link>
+            </Button>
+          </div>
         </div>
-        <Button asChild variant="outline" className="self-center flex items-center justify-center gap-2">
-          <Link href="/dashboard/compose">
-            Write
-            <PencilIcon />
-          </Link>
-        </Button>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   )
