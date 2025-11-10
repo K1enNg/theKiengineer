@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthorsModule } from './authors/authors.module';
 import { Author } from './authors/entities/author.entity';
-import { AuthModule } from './auth/auth.module';
+import { ArticlesModule } from './articles/articles.module';
 
 @Module({
   imports: [
@@ -19,11 +19,11 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [],
+      entities: [Author],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Author]),
-    AuthModule,
+    AuthorsModule,
+    ArticlesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
