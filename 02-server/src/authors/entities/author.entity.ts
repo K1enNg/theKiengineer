@@ -6,7 +6,10 @@ export class Author {
     id: string;
 
     @Column()
-    name: string;
+    firstName: string;
+
+    @Column()
+    lastName: string;
 
     @Column({unique: true})
     email: string;
@@ -14,8 +17,8 @@ export class Author {
     @Column()
     password: string;
 
-    @Column()
-    avatar: string;
+    @Column({nullable: true})
+    avatar?: string;
 
     @CreateDateColumn()
     createdAt: Date;

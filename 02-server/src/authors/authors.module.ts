@@ -8,5 +8,6 @@ import { Author } from './entities/author.entity';
   controllers: [AuthorsController],
   providers: [AuthorsService],
   imports: [TypeOrmModule.forFeature([Author])],
+  exports: [AuthorsService],
 })
 export class AuthorsModule {}
