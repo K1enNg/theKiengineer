@@ -1,6 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthorDto } from 'src/authors/dto/create-author.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -11,5 +12,10 @@ export class AuthController {
     async register(@Body() createAuthorDto: CreateAuthorDto) {
         const { firstName, lastName, email, password } = createAuthorDto;
         return this.authService.register(firstName, lastName, email, password);
+    }
+
+    @Post('login')
+    async login(@Body() loginDto: LoginDto) {
+        return this.authService.login(loginDto);
     }
 }
