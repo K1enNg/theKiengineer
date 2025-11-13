@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { AuthorsService } from 'src/authors/authors.service';
-import { CreateAuthorDto } from 'src/authors/dto/create-author.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -20,10 +20,28 @@ export class AuthService {
         throw new UnauthorizedException("Invalid credentials");
     }
 
-    async login(author: any) {
+    async login(loginDto: LoginDto) {
+        const { email, password } = loginDto;
+        const author = await this.authorsService.findByEmail(email);
+        if (!author) {
+            throw new UnauthorizedException("Invalid email or password");
+        }
+
+
+        const isPasswordValid = await bcrypt.compare(password, author.password);
+        if (!isPasswordValid) {
+            throw new UnauthorizedException("Invalid email or password");
+        }
+
         const payload = { email: author.email, sub: author.id };
         return {
             access_token: this.jwtService.sign(payload),
+            author: {
+                id: author.id,
+                firstName: author.firstName,
+                lastName: author.lastName,
+                email: author.email
+            }
         };
     }
 

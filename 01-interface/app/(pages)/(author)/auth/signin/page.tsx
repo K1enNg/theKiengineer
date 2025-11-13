@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
+import { login, getProfile } from "@/utils/auth"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
     email: z.string().email(),    
@@ -16,6 +19,22 @@ const formSchema = z.object({
 
 
 const SignIn = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [profile, setProfile] = useState<any>(null);
+    const router = useRouter();
+
+    const handleSignIn = async () => {
+        try {
+            await login({ email, password });
+            const data = await getProfile();
+            setProfile(data);
+            router.push('/dashboard');
+        } catch (error) {
+            console.log("Login failed: ", error);
+        }
+    }
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -23,10 +42,6 @@ const SignIn = () => {
             password: "",
         },
     })
-
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-    }
     
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -37,7 +52,7 @@ const SignIn = () => {
                     </h2>
                 </div>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-6">
+                    <form onSubmit={(e)=>{e.preventDefault();}} className="mt-8 space-y-6">
                         <div className="rounded-md shadow-sm space-y-4">
                             <FormField
                                 control={form.control}
@@ -49,9 +64,11 @@ const SignIn = () => {
                                         </FormLabel>
                                         <FormControl>
                                             <Input 
+                                                type="email"
                                                 placeholder="Enter your email" 
                                                 className="mt-1 block w-full"
-                                                {...field} 
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
                                             />
                                         </FormControl>
                                         <FormMessage className="text-red-600 text-sm mt-1" />
@@ -71,7 +88,8 @@ const SignIn = () => {
                                                 type="password"
                                                 placeholder="Enter your password" 
                                                 className="mt-1 block w-full"
-                                                {...field} 
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
                                             />
                                         </FormControl>
                                         <FormMessage className="text-red-600 text-sm mt-1" />
@@ -83,6 +101,7 @@ const SignIn = () => {
                         <div>
                             <Button 
                                 type="submit" 
+                                onClick={handleSignIn}
                                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Sign in
