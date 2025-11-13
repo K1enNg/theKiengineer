@@ -1,12 +1,18 @@
+import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { JwtService } from '@nestjs/jwt';
-import { Injectable } from '@nestjs/common';
 
+describe('AuthService', () => {
+  let service: AuthService;
 
-@Injectable()
-export class AuthServiceSpec {
-  constructor(
-    private readonly authService: AuthService,
-    private jwtService: JwtService
-  ) {}
-};
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [AuthService],
+    }).compile();
+
+    service = module.get<AuthService>(AuthService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
