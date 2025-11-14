@@ -18,3 +18,13 @@ export const getProfile = async () => {
     const res = await api.get('/auth/profile');
     return res.data;
 }
+
+export const logout = () => {
+    if (typeof window !== 'undefined') {
+        try {
+            localStorage.removeItem('token');
+        } catch (e) {
+            throw new Error(e as string);
+        }
+    }
+}

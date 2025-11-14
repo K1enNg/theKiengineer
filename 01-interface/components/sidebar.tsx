@@ -1,3 +1,4 @@
+"use client"
 import { Home, Settings, PencilIcon, MessageCircle, BarChart, LogOut } from "lucide-react"
 
 import {
@@ -12,6 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import useLogout from "@/hooks/useLogout"
 
 const author = {
   name: "John Doe",
@@ -42,6 +44,8 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const doLogout = useLogout('/homepage');
+  const handleLogout = () => doLogout();
   return (
     <Sidebar>
       <SidebarContent>
@@ -78,11 +82,9 @@ export function AppSidebar() {
           </SidebarGroup>
 
           <div className="mt-auto p-4">
-            <Button asChild variant="ghost" className="w-full justify-start">
-              <Link href="/">
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Link>
+            <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
             </Button>
           </div>
         </div>

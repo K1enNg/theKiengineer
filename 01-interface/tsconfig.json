@@ -21,7 +21,8 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@/utils/*": ["app/utils/*"]
+      "@/utils/*": ["app/utils/*"],
+      "@/hooks/*": ["hooks/*"]
     }
   },
   "include": [
