@@ -17,9 +17,6 @@ import {
   Code,
   Link as LinkIcon,
   Image as ImageIcon,
-  Heading1,
-  Heading2,
-  Heading3,
 } from "lucide-react"
 
 const TextArea = () => {

@@ -20,4 +20,8 @@ export class AuthorsService {
   async findByEmail(email: string): Promise<Author | null> {
     return this.authorsRepository.findOne({ where: { email } });
   }
+
+  async findById(id: string): Promise<Author | null> {
+    return this.authorsRepository.findOne({ where: { id } });
+  }
 }

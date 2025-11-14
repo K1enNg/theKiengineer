@@ -1,10 +1,10 @@
-import DataTablePage from "./postlist/page"
+import PostListPage from "./postlist/page"
 
 const Dashboard = () => {
 
   return (
     <div>
-      <DataTablePage />
+      <PostListPage />
     </div>
   )
 }
