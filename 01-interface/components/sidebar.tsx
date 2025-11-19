@@ -1,6 +1,8 @@
 "use client"
 import { Home, Settings, PencilIcon, MessageCircle, BarChart, LogOut } from "lucide-react"
 
+import { useAuth } from "@/hooks/useAuth"
+
 import {
   Sidebar,
   SidebarContent,
@@ -14,8 +16,6 @@ import {
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import useLogout from "@/hooks/useLogout"
-import useAuth from "@/hooks/useAuth"
-import { useEffect, useState } from "react"
 
 const fallbackAvatar = "https://imgs.search.brave.com/f9-2ZaPOsVreIjFY28CEGSU6VmSYyzlJdm_wpopWoFU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9hbm9u/eW1vdXMtbWFsZS1w/cm9maWxlLWlsbHVz/dHJhdGlvbi1ncmF5/LXRvbmVzLWdlbmVy/aWMtYXZhdGFyLXBs/YWNlaG9sZGVyLW5l/dXRyYWwtZXhwcmVz/c2lvbi1kZXNpZ25l/ZC11c2Utb25saW5l/LTM3NzU2NjIyOC5q/cGc"
 
@@ -44,13 +44,11 @@ const items = [
 
 export function AppSidebar() {
   const logout = useLogout('/homepage');
-  const handleLogout = () => logout();
-  const profile = useAuth('/auth/signin');
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true) }, []);
-  const firstName = mounted ? (profile?.firstName ?? "Author") : "Author";
-  const lastName = mounted ? (profile?.lastName ?? "") : "";
-  const avatar = mounted ? (profile?.avatar || fallbackAvatar) : fallbackAvatar;
+
+  const { user } = useAuth();
+
+  const avatar = user?.avatar || fallbackAvatar;
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -58,11 +56,11 @@ export function AppSidebar() {
           <div className="flex flex-col items-center justify-center p-4">
             <img
               src={avatar}
-              alt={`${firstName} ${lastName}`}
+              alt={`${user.firstName} ${user.lastName}`}
 
               className="w-16 h-16 rounded-full object-cover"
             />
-            <span className="mt-2 text-sm font-medium">{firstName} {lastName}</span>
+            <span className="mt-2 text-sm font-medium">{user.firstName} {user.lastName}</span>
           </div>
           <Button asChild variant="outline" className="self-center flex items-center justify-center gap-2">
             <Link href="/dashboard/compose">
@@ -88,7 +86,7 @@ export function AppSidebar() {
           </SidebarGroup>
 
           <div className="mt-auto p-4">
-            <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => logout}>
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </Button>
