@@ -1,36 +1,34 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from 'react'
-import { createContext } from "react"
-import { getProfile } from '../utils/auth';
+import React, { createContext, useState, useEffect } from "react";
+import { getProfile } from "@/utils/auth";
 
-const AuthContext = createContext<any>(null);
+export const AuthContext = createContext<any>(null);
 
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<any>(null);
+  const [loaded, setLoaded] = useState(false);
 
-const AuthProvider = ({ children}: {children: React.ReactNode}) => {
-    const [user, setUser] = useState(null);
-    const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const data = await getProfile();
+        setUser(data);
+      } catch {
+        setUser(null);
+      } finally {
+        setLoaded(true);
+      }
+    };
 
-    useEffect(() => {
-        const loadUser = async () => {
-            try {
-                const data = await getProfile();
-                setUser(data);
-            } catch {
-                setUser(null);
-            } finally {
-                setLoaded(true);
-            }
-        }
+    loadUser();
+  }, []);
 
-        loadUser();
-    }, [])
   return (
     <AuthContext.Provider value={{ user, setUser, loaded }}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
 export default AuthProvider;
-export { AuthContext };
