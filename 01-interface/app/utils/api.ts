@@ -18,4 +18,18 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        const status = error?.response?.status;
+        if (status === 401) {
+            if (typeof window !== 'undefined') {
+                try { localStorage.removeItem('token'); } catch { /* noop */ }
+                window.location.replace('/auth/signin');
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
 export default api;
