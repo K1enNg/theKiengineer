@@ -1,3 +1,5 @@
+import { Author } from "./author";
+
 export interface Article {
   id: string;
   title: string;
@@ -5,12 +7,21 @@ export interface Article {
   slug: string;
   tags: string[];
   coverImage: string;
-  author: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    avatar?: string | null;
-  };
+  author: Author;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CreateArticleDto {
+  title: string;
+  content: string;
+  tags: string[];
+  coverImage?: string | null;
+}
+
+export interface UpdateArticleDto {
+  title?: string;
+  content?: string;
+  tags?: string[];
+  coverImage?: string;
 }

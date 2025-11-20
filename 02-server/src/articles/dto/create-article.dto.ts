@@ -13,6 +13,7 @@ export class CreateArticleDto {
     tags?: string[];
 
     @IsString()
+    @IsOptional()
     coverImage: string;
 }
 

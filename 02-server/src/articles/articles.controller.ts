@@ -11,13 +11,15 @@ export class ArticlesController {
 
   @Post()
   create(@Req() req, @Body() dto: CreateArticleDto) {
+    // console.log("AUTH HEADER:", req.headers.authorization);
+    // console.log("USER:", req.user);
     return this.service.create(req.user.id, dto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.articlesService.findAll();
-  // }
+  @Get()
+  findAll(@Req() req) {
+    return this.service.findAllByAuthor(req.user.id);
+  }
 
   @Get(':slug')
   findOne(@Param('slug') slug: string) {
