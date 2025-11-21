@@ -1,13 +1,12 @@
 import React from 'react'
-import { articles, DataTable } from '@/components/article-table'
-import { columns } from '@/components/article-table'
+import { ArticleList } from '@/components/articles/article-list'
 
-const PostListPage = () => {
+const ArticleListPage = () => {
   return (
     <div>
-      <DataTable columns={columns} data={articles} />
+      <ArticleList />
     </div>
   )
 }
 
-export default PostListPage
+export default ArticleListPage

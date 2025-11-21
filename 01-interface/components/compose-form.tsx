@@ -57,7 +57,7 @@ const ComposeArticleForm = () => {
       };
 
       await createArticles(payload);
-      router.push("dashboard/postlist");
+      router.push("/dashboard/postlist");
     } catch (err) {
       console.log("failed to create article: ", err)
     }

@@ -18,7 +18,7 @@ export default function DashboardLayout({
         <AppSidebar />
         <main className="flex-1 p-6 md:p-8">
           {user && (
-            <h1 className="text-4xl mt-6 font-bold text-left leading-tight md:ml-70">
+            <h1 className="text-4xl mt-6 font-bold text-left leading-tight mb-6">
               Welcome back, {user.firstName}.
               What's on your mind today?
             </h1>

@@ -15,7 +15,23 @@ export class ArticlesService {
 
 
   async create(authorId: string, dto: CreateArticleDto) {
-    const slug = slugify(dto.title, { lower: true })
+    let slug = slugify(dto.title, { lower: true })
+
+    let existing = await this.repo.findOne({ where: { slug } });
+
+    // If slug exists, append "-1", "-2", etc.
+    let counter = 1;
+    while (existing) {
+      const newSlug = `${slug}-${counter}`;
+      existing = await this.repo.findOne({ where: { slug: newSlug } });
+
+      if (!existing) {
+        slug = newSlug;
+        break;
+      }
+
+      counter++;
+    }
 
     const article = this.repo.create({
       ...dto,

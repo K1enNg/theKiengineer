@@ -7,17 +7,36 @@ const api = axios.create({
     }
 });
 
-api.interceptors.request.use((config) => {
-    if (typeof window != 'undefined') {
-        const token = localStorage.getItem('token');
-        console.log("TOKEN FOUND IN LOCALSTORAGE:", token);
+// api.interceptors.request.use((config) => {
+//     if (typeof window != 'undefined') {
+//         const token = localStorage.getItem('token');
+//         console.log("TOKEN FOUND IN LOCALSTORAGE:", token);
         
+//         if (token) {
+//             config.headers = config.headers ?? {};
+//             config.headers.Authorization = `Bearer ${token}`;
+//             console.log("AUTH HEADER SET:", config.headers.Authorization);
+//         } else {
+//             console.log("NO TOKEN FOUND.");
+//         }
+//     }
+//     return config;
+// });
+
+api.interceptors.request.use((config) => {
+    if (typeof window !== 'undefined') {
+        // Try to get token from localStorage first, then from cookie
+        let token = localStorage.getItem('token');
+        
+        // If not in localStorage, try to get from cookie
+        if (!token) {
+            const match = document.cookie.match(/access_token=([^;]+)/);
+            token = match ? match[1] : null;
+        }
+
         if (token) {
-            config.headers = config.headers ?? {};
+            config.headers = config.headers || {};
             config.headers.Authorization = `Bearer ${token}`;
-            console.log("AUTH HEADER SET:", config.headers.Authorization);
-        } else {
-            console.log("NO TOKEN FOUND.");
         }
     }
     return config;
