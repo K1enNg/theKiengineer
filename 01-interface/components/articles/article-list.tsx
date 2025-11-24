@@ -5,9 +5,15 @@ import { getAllArticles } from "@/app/utils/articles";
 import { Article } from "@/app/types/table";
 import { ArticleTable } from "./article-table";
 import { columns } from "../columns";
+import { getDeleteArticle } from "@/app/utils/articles";
 
 export function ArticleList() {
   const [data, setData] = useState<Article[]>([]);
+
+  const handleDelete = async (id: string) => {
+    await getDeleteArticle(id);
+    setData((prev) => prev.filter((a) => a.id !== id));
+  }
 
   useEffect(() => {
     const fetch = async () => {
@@ -26,5 +32,5 @@ export function ArticleList() {
     fetch();
   }, []);
 
-  return <ArticleTable columns={columns} data={data}/>;
+  return <ArticleTable columns={columns(handleDelete)} data={data} />;
 }

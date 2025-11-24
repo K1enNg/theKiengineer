@@ -1,3 +1,4 @@
+"use client"
 
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
@@ -11,8 +12,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
-export const columns: ColumnDef<Article>[] = [
+
+export const columns = (onDelete: (id: string) => void): ColumnDef<Article>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -65,20 +68,36 @@ export const columns: ColumnDef<Article>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
+    cell: ({ row }) => {
+      const article = row.original;
+      const router = useRouter();
 
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem>View</DropdownMenuItem>
-          <DropdownMenuItem>Edit</DropdownMenuItem>
-          <DropdownMenuItem>Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => router.push(`dashboard/articles/${article.id}`)}>
+              View
+            </DropdownMenuItem>
+
+            <DropdownMenuItem onClick={() => router.push(`dashboard/articles/edit/${article.id}`)}>
+              Edit
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              className="text-red-600"
+              onClick={() => onDelete(article.id)}
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
   },
 ]
