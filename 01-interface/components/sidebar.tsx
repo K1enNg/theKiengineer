@@ -86,7 +86,7 @@ export function AppSidebar() {
           </SidebarGroup>
 
           <div className="mt-auto p-4">
-            <Button variant="ghost" className="w-full justify-start" onClick={() => logout}>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => logout()}>
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </Button>

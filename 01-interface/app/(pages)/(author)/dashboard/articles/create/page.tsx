@@ -1,6 +1,6 @@
 "use client"
 
-import ComposeArticleForm from "@/components/article-form"
+import ComposeArticleForm from "@/components/compose-form"
 
 const ComposePage = () => {
   return (

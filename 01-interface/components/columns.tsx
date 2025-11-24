@@ -75,6 +75,7 @@ export const columns: ColumnDef<Article>[] = [
 
         <DropdownMenuContent align="end">
           <DropdownMenuItem>View</DropdownMenuItem>
+          <DropdownMenuItem>Edit</DropdownMenuItem>
           <DropdownMenuItem>Delete</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

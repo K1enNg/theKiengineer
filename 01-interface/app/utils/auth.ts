@@ -37,9 +37,10 @@ export const login = async (cred: { email: string; password: string }) => {
 };
 
 export const logout = () => {
-  if (typeof window !== 'undefined') {
-    document.cookie = 'access_token=; path=/;';
-    localStorage.removeItem('author');
+   if (typeof window !== "undefined") {
+    document.cookie = "access_token=; Max-Age=0; path=/;";
+    localStorage.removeItem("token");
+    localStorage.removeItem("author");
   }
 };
 
