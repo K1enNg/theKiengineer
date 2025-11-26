@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 export interface Article {
   id: string
+  slug: string
   title: string
   date: Date
 }

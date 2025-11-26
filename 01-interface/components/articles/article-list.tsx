@@ -10,9 +10,9 @@ import { getDeleteArticle } from "@/app/utils/articles";
 export function ArticleList() {
   const [data, setData] = useState<Article[]>([]);
 
-  const handleDelete = async (id: string) => {
-    await getDeleteArticle(id);
-    setData((prev) => prev.filter((a) => a.id !== id));
+  const handleDelete = async (slug: string) => {
+    await getDeleteArticle(slug);
+    setData((prev) => prev.filter((a) => a.slug !== slug));
   }
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export function ArticleList() {
         const items = await getAllArticles();
         const formatted = items.map((a) => ({
           id: a.id,
+          slug: a.slug,
           title: a.title,
           date: new Date(a.createdAt),
         }));

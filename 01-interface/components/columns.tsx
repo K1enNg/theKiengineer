@@ -15,7 +15,7 @@ import {
 import { useRouter } from "next/navigation";
 
 
-export const columns = (onDelete: (id: string) => void): ColumnDef<Article>[] => [
+export const columns = (onDelete: (slug: string) => void): ColumnDef<Article>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -81,17 +81,17 @@ export const columns = (onDelete: (id: string) => void): ColumnDef<Article>[] =>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => router.push(`dashboard/articles/${article.id}`)}>
+            <DropdownMenuItem onClick={() => router.push(`dashboard/articles/${article.slug}`)}>
               View
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={() => router.push(`dashboard/articles/edit/${article.id}`)}>
+            <DropdownMenuItem onClick={() => router.push(`dashboard/articles/edit/${article.slug}`)}>
               Edit
             </DropdownMenuItem>
 
             <DropdownMenuItem
               className="text-red-600"
-              onClick={() => onDelete(article.id)}
+              onClick={() => onDelete(article.slug)}
             >
               Delete
             </DropdownMenuItem>
