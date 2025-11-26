@@ -63,7 +63,7 @@ export function AppSidebar() {
             <span className="mt-2 text-sm font-medium">{user.firstName} {user.lastName}</span>
           </div>
           <Button asChild variant="outline" className="self-center flex items-center justify-center gap-2">
-            <Link href="/dashboard/compose">
+            <Link href="/dashboard/articles/create">
               Write
               <PencilIcon />
             </Link>
@@ -86,7 +86,7 @@ export function AppSidebar() {
           </SidebarGroup>
 
           <div className="mt-auto p-4">
-            <Button variant="ghost" className="w-full justify-start" onClick={() => logout}>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => logout()}>
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </Button>

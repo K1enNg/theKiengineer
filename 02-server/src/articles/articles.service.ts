@@ -1,26 +1,78 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Article } from './entities/article.entity';
+import { Repository } from 'typeorm';
+import slugify from 'slugify';
 
 @Injectable()
 export class ArticlesService {
-  create(createArticleDto: CreateArticleDto) {
-    return 'This action adds a new article';
+  constructor(
+    @InjectRepository(Article)
+    private repo: Repository<Article>
+  ) { }
+
+
+  async create(authorId: string, dto: CreateArticleDto) {
+    let slug = slugify(dto.title, { lower: true })
+
+    let existing = await this.repo.findOne({ where: { slug } });
+
+    // If slug exists, append "-1", "-2", etc.
+    let counter = 1;
+    while (existing) {
+      const newSlug = `${slug}-${counter}`;
+      existing = await this.repo.findOne({ where: { slug: newSlug } });
+
+      if (!existing) {
+        slug = newSlug;
+        break;
+      }
+
+      counter++;
+    }
+
+    const article = this.repo.create({
+      ...dto,
+      slug,
+      author: { id: authorId },
+    })
+    return this.repo.save(article);
   }
 
-  findAll() {
-    return `This action returns all articles`;
+  findAllByAuthor(authorId: string) {
+    return this.repo.find({
+      where: { author: { id: authorId } },
+      order: { createdAt: 'DESC' }
+    })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
+  findOne(slug: string) {
+    return this.repo.findOne({ where: { slug } });
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+  async update(slug: string, dto: UpdateArticleDto) {
+    const article = await this.findOne(slug);
+    if (!article) {
+      throw new NotFoundException('Article not found')
+    }
+
+    Object.assign(article, dto);
+
+    if (dto.title) {
+      article.slug = slugify(dto.title, { lower: true })
+    }
+
+    return this.repo.save(article);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
+  async remove(slug: string) {
+    const article = await this.findOne(slug);
+    if (!article) {
+      throw new NotFoundException('Article not found')
+    }
+
+    return this.repo.remove(article);
   }
 }

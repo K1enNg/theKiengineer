@@ -1,6 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";
 import { Author } from "../../authors/entities/author.entity";
-import { ManyToOne } from "typeorm";
 
 @Entity()
 export class Article {
@@ -16,13 +15,13 @@ export class Article {
     @Column({ unique: true })
     slug: string;
 
-    @Column()
+    @Column("text", { array: true })
     tags: string[];
 
     @Column({ nullable: true })
     coverImage: string;
 
-    @ManyToOne(() => Author, (author) => author.id, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Author, author => author.articles, { onDelete: 'CASCADE' })
     author: Author;
 
     @CreateDateColumn()
