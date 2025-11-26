@@ -1,5 +1,4 @@
-import React from 'react'
-import { ArticleList } from '@/components/articles/article-list'
+import { ArticleList } from '@/features/articles/components/article-list'
 
 const ArticleListPage = () => {
   return (

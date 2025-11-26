@@ -81,11 +81,11 @@ export const columns = (onDelete: (slug: string) => void): ColumnDef<Article>[] 
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => router.push(`dashboard/articles/${article.slug}`)}>
+            <DropdownMenuItem onClick={() => router.push(`/dashboard/articles/${article.slug}`)}>
               View
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={() => router.push(`dashboard/articles/edit/${article.slug}`)}>
+            <DropdownMenuItem onClick={() => router.push(`/dashboard/articles/edit/${article.slug}`)}>
               Edit
             </DropdownMenuItem>
 
