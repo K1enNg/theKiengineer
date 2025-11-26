@@ -1,7 +1,7 @@
 "use client"
 import { Home, Settings, PencilIcon, MessageCircle, BarChart, LogOut } from "lucide-react"
 
-import { useAuth } from "@/hooks/useAuth"
+import { useAuth } from "@/features/auth/hooks/useAuth"
 
 import {
   Sidebar,
@@ -47,7 +47,11 @@ export function AppSidebar() {
 
   const { user } = useAuth();
 
-  const avatar = user?.avatar || fallbackAvatar;
+  if (!user) {
+    return null;
+  }
+
+  const avatar = user.avatar || fallbackAvatar;
 
   return (
     <Sidebar>

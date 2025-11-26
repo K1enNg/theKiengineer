@@ -7,6 +7,7 @@
 export { ArticleList } from './components/article-list';
 export { ArticleTable } from './components/article-table';
 export { articleColumns } from './components/article-columns';
+export { default as ComposeArticleForm } from './components/article-form';
 
 // Services
 export { articleService } from './services/article.service';

@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
-import { login} from "@/utils/auth"
+import { authService } from "@/features/auth"
 import { useRouter } from "next/navigation"
+import { ROUTES } from "@/config/routes"
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -28,8 +29,8 @@ const SignIn = () => {
 
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
-            await login(data)
-            router.push("/dashboard")
+            await authService.login(data)
+            router.push(ROUTES.DASHBOARD)
         } catch (error) {
             console.log("Login failed: ", error)
         }

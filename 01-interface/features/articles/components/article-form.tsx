@@ -24,7 +24,8 @@ import {
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { createArticles } from "@/app/utils/articles"
+import { articleService } from "@/features/articles/services/article.service"
+import { ROUTES } from "@/config/routes"
 
 const articleSchema = z.object({
   title: z.string(),
@@ -56,8 +57,8 @@ const ComposeArticleForm = () => {
         // authorId: author.id
       };
 
-      await createArticles(payload);
-      router.push("/dashboard/postlist");
+      await articleService.create(payload);
+      router.push(ROUTES.ARTICLES.LIST);
     } catch (err) {
       console.log("failed to create article: ", err)
     }

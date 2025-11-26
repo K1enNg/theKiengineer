@@ -18,7 +18,7 @@ const getEnvVar = (key: string, defaultValue?: string): string => {
 
 const env = {
     // API Configuration
-    apiUrl: getEnvVar('NEXT_PUBLIC_API_URL'),
+    apiUrl: getEnvVar('NEXT_PUBLIC_API_URL', 'http://localhost:5000'),
 
     // Environment
     isDevelopment: process.env.NODE_ENV === 'development',
