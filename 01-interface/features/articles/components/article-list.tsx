@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { articleService } from "../services/article.service";
 import type { ArticleTableRow } from "../types/article.types";
-import { ArticleTable } from "./article-table";
-import { articleColumns } from "./article-columns";
+import { ArticleListContent } from "./article-list-content";
+import { ErrorState } from "@/shared/components/states";
 
 export function ArticleList() {
     const [data, setData] = useState<ArticleTableRow[]>([]);
@@ -46,8 +46,8 @@ export function ArticleList() {
     }, []);
 
     if (error) {
-        return <div className="text-red-600">{error}</div>;
+        return <ErrorState title="Error Loading Articles" message={error} />;
     }
 
-    return <ArticleTable columns={articleColumns(handleDelete)} data={data} isLoading={isLoading} />;
+    return <ArticleListContent data={data} isLoading={isLoading} onDelete={handleDelete} />;
 }

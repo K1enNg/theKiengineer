@@ -5,6 +5,7 @@
 
 // Components
 export { ArticleList } from './components/article-list';
+export { ArticleListContent } from './components/article-list-content';
 export { ArticleTable } from './components/article-table';
 export { articleColumns } from './components/article-columns';
 export { default as ComposeArticleForm } from './components/article-form';

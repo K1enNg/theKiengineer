@@ -3,6 +3,13 @@
  * Export all public components, services, hooks, and types
  */
 
+// Components
+export { SignInForm } from './components/signin-form';
+
+// Schemas
+export { signInSchema } from './schemas/signin.schema';
+export type { SignInFormData } from './schemas/signin.schema';
+
 // Context & Provider
 export { AuthContext, default as AuthProvider } from './context/AuthContext';
 export type { AuthContextValue } from './context/AuthContext';
