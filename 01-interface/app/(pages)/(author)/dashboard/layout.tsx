@@ -3,7 +3,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/shared/components/layout/sidebar"
 import { useAuth } from "@/features/auth"
-
+import { LoadingSpinner } from "@/shared/components/layout/spinner"
 export default function DashboardLayout({
   children
 }: {
@@ -11,19 +11,23 @@ export default function DashboardLayout({
 }) {
   const { user, loaded } = useAuth();
 
-  if (!loaded) return null;
-
   return (
     <SidebarProvider>
       <AppSidebar />
       <main className="flex-1 p-6 md:p-8">
-        {user && (
-          <h1 className="text-4xl mt-6 font-bold text-left leading-tight mb-6">
-            Welcome back, {user.firstName}.
-            What's on your mind today?
-          </h1>
+        {!loaded ? (
+          <LoadingSpinner size="lg" text="Loading..." className="h-64" />
+        ) : (
+          <>
+            {user && (
+              <h1 className="text-4xl mt-6 font-bold text-left leading-tight mb-6">
+                Welcome back, {user.firstName}.
+                What's on your mind today?
+              </h1>
+            )}
+            {children}
+          </>
         )}
-        {children}
       </main>
     </SidebarProvider>
   )

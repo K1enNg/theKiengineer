@@ -1,7 +1,7 @@
 "use client"
 import { Home, Settings, PencilIcon, MessageCircle, BarChart, LogOut } from "lucide-react"
 
-import { useAuth } from "@/features/auth/hooks/useAuth"
+import { useAuth, useLogout } from "@/features/auth"
 
 import {
   Sidebar,
@@ -15,7 +15,6 @@ import {
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import useLogout from "@/hooks/useLogout"
 
 const fallbackAvatar = "https://imgs.search.brave.com/f9-2ZaPOsVreIjFY28CEGSU6VmSYyzlJdm_wpopWoFU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9hbm9u/eW1vdXMtbWFsZS1w/cm9maWxlLWlsbHVz/dHJhdGlvbi1ncmF5/LXRvbmVzLWdlbmVy/aWMtYXZhdGFyLXBs/YWNlaG9sZGVyLW5l/dXRyYWwtZXhwcmVz/c2lvbi1kZXNpZ25l/ZC11c2Utb25saW5l/LTM3NzU2NjIyOC5q/cGc"
 
@@ -92,7 +91,7 @@ export function AppSidebar() {
           <div className="mt-auto p-4">
             <Button variant="ghost" className="w-full justify-start" onClick={() => logout()}>
               <LogOut className="mr-2 h-4 w-4" />
-              Logout
+              Log out
             </Button>
           </div>
         </div>

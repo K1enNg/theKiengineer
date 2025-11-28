@@ -9,6 +9,7 @@ export type { AuthContextValue } from './context/AuthContext';
 
 // Hooks
 export { useAuth } from './hooks/useAuth';
+export { useLogout } from './hooks/useLogout';
 
 // Services
 export { authService } from './services/auth.service';
