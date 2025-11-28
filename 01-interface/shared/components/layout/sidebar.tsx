@@ -1,7 +1,8 @@
 "use client"
-import { Home, Settings, PencilIcon, MessageCircle, BarChart, LogOut } from "lucide-react"
+import { PencilIcon, LogOut } from "lucide-react"
 
 import { useAuth, useLogout } from "@/features/auth"
+import { SIDEBAR_NAV_ITEMS, FALLBACK_AVATAR_URL } from "@/shared/constants/sidebar.constants"
 
 import {
   Sidebar,
@@ -16,31 +17,6 @@ import {
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-const fallbackAvatar = "https://imgs.search.brave.com/f9-2ZaPOsVreIjFY28CEGSU6VmSYyzlJdm_wpopWoFU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9hbm9u/eW1vdXMtbWFsZS1w/cm9maWxlLWlsbHVz/dHJhdGlvbi1ncmF5/LXRvbmVzLWdlbmVy/aWMtYXZhdGFyLXBs/YWNlaG9sZGVyLW5l/dXRyYWwtZXhwcmVz/c2lvbi1kZXNpZ25l/ZC11c2Utb25saW5l/LTM3NzU2NjIyOC5q/cGc"
-
-const items = [
-  {
-    title: "Articles",
-    url: "/dashboard/postlist",
-    icon: Home,
-  },
-  {
-    title: "Comments",
-    url: "#",
-    icon: MessageCircle,
-  },
-  {
-    title: "Analytics",
-    url: "#",
-    icon: BarChart,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-]
-
 export function AppSidebar() {
   const logout = useLogout('/homepage');
 
@@ -50,7 +26,7 @@ export function AppSidebar() {
     return null;
   }
 
-  const avatar = user.avatar || fallbackAvatar;
+  const avatar = user.avatar || FALLBACK_AVATAR_URL;
 
   return (
     <Sidebar>
@@ -74,7 +50,7 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                {items.map((item) => (
+                {SIDEBAR_NAV_ITEMS.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <Link href={item.url}>
