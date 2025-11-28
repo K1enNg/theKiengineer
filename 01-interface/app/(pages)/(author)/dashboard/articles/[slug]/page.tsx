@@ -1,16 +1,18 @@
-import { getArticleById } from '@/app/utils/articles'
-import React from 'react'
+import { articleService } from '@/features/articles/services/article.service'
 import { cookies } from 'next/headers'
-import { Article } from '@/app/types/article'
+import type { Article } from '@/features/articles/types/article.types'
+import { ROUTES } from '@/config/routes'
+import { ErrorState, NotFoundState } from '@/shared/components/states'
+import { ArticleViewContent } from '@/features/articles'
 
 const ArticleView = async ({ params }: { params: Promise<{ slug: string }> }) => {
     const { slug } = await params
     const cookieStore = await cookies()
     const token = cookieStore.get('access_token')?.value
 
-    let article = null;
+    let article: Article | null = null;
     try {
-        article = await getArticleById(slug, {
+        article = await articleService.getBySlug(slug, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -18,21 +20,29 @@ const ArticleView = async ({ params }: { params: Promise<{ slug: string }> }) =>
     } catch (error: any) {
         if (error?.response?.status !== 404) {
             console.error("Failed to fetch article:", error)
-            return <div>Error loading article</div>
+            return (
+                <ErrorState
+                    title="Error Loading Article"
+                    message="Failed to load the article. Please try again later."
+                    actionLabel="Back to Articles"
+                    actionHref={ROUTES.ARTICLES.LIST}
+                />
+            )
         }
     }
 
     if (!article) {
-        return <div>Article not found</div>
+        return (
+            <NotFoundState
+                title="Article Not Found"
+                message="The article you're looking for doesn't exist or has been removed."
+                actionLabel="Back to Articles"
+                actionHref={ROUTES.ARTICLES.LIST}
+            />
+        )
     }
 
-    return (
-        <div>
-            <h1>ArticleView</h1>
-            <p>{article.title}</p>
-            <p>{article.content}</p>
-        </div>
-    )
+    return <ArticleViewContent article={article} backHref={ROUTES.ARTICLES.LIST} />
 }
 
 export default ArticleView

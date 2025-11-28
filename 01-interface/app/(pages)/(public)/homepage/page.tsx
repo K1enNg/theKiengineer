@@ -1,4 +1,4 @@
-import Header from "@/components/header"
+import Header from "@/shared/components/layout/header"
 
 const Homepage = () => {
     return (
