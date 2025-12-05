@@ -1,18 +1,21 @@
 'use client'
 
-import { SignInForm, authService, type SignInFormData } from "@/features/auth"
+import { SignInForm, authService, useAuth, type SignInFormData } from "@/features/auth"
 import { useRouter } from "next/navigation"
 import { ROUTES } from "@/config/routes"
 import { useState } from "react"
 
 const SignIn = () => {
     const router = useRouter()
+    const { setUser } = useAuth()
     const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async (data: SignInFormData) => {
         try {
             setIsLoading(true)
-            await authService.login(data)
+            const { author } = await authService.login(data)
+            // Update the AuthContext with the logged-in user
+            setUser(author)
             router.push(ROUTES.DASHBOARD)
         } catch (error) {
             console.log("Login failed: ", error)
