@@ -4,6 +4,7 @@
 
 export const ROUTES = {
     HOME: '/',
+    HOMEPAGE: '/homepage',
 
     DASHBOARD: '/dashboard',
 
@@ -18,6 +19,8 @@ export const ROUTES = {
         LIST: '/blogs',
         VIEW: (slug: string) => `/blogs/${slug}`,
     },
+
+    ABOUT: '/about',
 
     AUTH: {
         SIGNIN: '/auth/signin',
@@ -69,6 +72,21 @@ export const ROUTE_METADATA: Record<string, RouteMetadata> = {
     [ROUTES.AUTH.SIGNIN]: {
         title: 'Sign In',
         description: 'Sign in to your account',
+        requiresAuth: false,
+    },
+    [ROUTES.HOMEPAGE]: {
+        title: 'Home',
+        description: 'Welcome to TheKiengineer',
+        requiresAuth: false,
+    },
+    [ROUTES.ABOUT]: {
+        title: 'About',
+        description: 'Learn more about TheKiengineer',
+        requiresAuth: false,
+    },
+    [ROUTES.BLOGS.LIST]: {
+        title: 'Blogs',
+        description: 'Read our latest articles',
         requiresAuth: false,
     },
 };
