@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "turbo": "^2.6.3"
+  },
+  "packageManager": "npm@8.16.0",
+  "workspaces": [
+    "01-interface",
+    "02-server"
+  ]
+}
