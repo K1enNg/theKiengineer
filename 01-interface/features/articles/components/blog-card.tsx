@@ -6,6 +6,7 @@ import { Article } from "../types/article.types";
 import { Calendar, User, Tag } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ROUTES } from "@/config/routes";
 
 interface BlogCardProps {
     article: Article;
@@ -28,7 +29,7 @@ export function BlogCard({ article }: BlogCardProps) {
     };
 
     return (
-        <Link href={`/blogs/${article.slug}`} className="group block h-full">
+        <Link href={ROUTES.BLOGS.VIEW(article.slug)} className="group block h-full">
             <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-border/50 hover:border-primary/50">
                 {/* Cover Image */}
                 <div className="relative h-48 w-full overflow-hidden bg-muted">
@@ -53,10 +54,10 @@ export function BlogCard({ article }: BlogCardProps) {
                         {article.title}
                     </h3>
 
-                    {/* Excerpt */}
+                    {/* Excerpt
                     <p className="text-sm text-muted-foreground line-clamp-3">
                         {getExcerpt(article.content)}
-                    </p>
+                    </p> */}
                 </CardHeader>
 
                 <CardContent className="space-y-3">

@@ -14,6 +14,11 @@ export const ROUTES = {
         CREATE: '/dashboard/articles/create',
     },
 
+    BLOGS: {
+        LIST: '/blogs',
+        VIEW: (slug: string) => `/blogs/${slug}`,
+    },
+
     AUTH: {
         SIGNIN: '/auth/signin',
         SIGNUP: '/auth/signup',
