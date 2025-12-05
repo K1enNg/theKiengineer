@@ -48,6 +48,13 @@ export class ArticlesService {
     })
   }
 
+  findAllPublic() {
+    return this.repo.find({
+      relations: ['author'],
+      order: { createdAt: 'DESC' }
+    })
+  }
+
   findOne(slug: string) {
     return this.repo.findOne({ where: { slug } });
   }

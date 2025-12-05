@@ -5,11 +5,17 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('articles')
-@UseGuards(JwtAuthGuard)
 export class ArticlesController {
-  constructor(private service: ArticlesService) {}
+  constructor(private service: ArticlesService) { }
+
+  @Get('public')
+  findAllPublic() {
+    return this.service.findAllPublic();
+  }
+
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(@Req() req, @Body() dto: CreateArticleDto) {
     // console.log("AUTH HEADER:", req.headers.authorization);
     // console.log("USER:", req.user);
@@ -17,6 +23,7 @@ export class ArticlesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll(@Req() req) {
     return this.service.findAllByAuthor(req.user.id);
   }
@@ -27,11 +34,13 @@ export class ArticlesController {
   }
 
   @Patch(':slug')
+  @UseGuards(JwtAuthGuard)
   update(@Param('slug') slug: string, @Body() dto: UpdateArticleDto) {
     return this.service.update(slug, dto);
   }
 
   @Delete(':slug')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('slug') slug: string) {
     return this.service.remove(slug);
   }
