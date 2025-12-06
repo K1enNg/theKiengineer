@@ -41,3 +41,10 @@ export const UI_CONSTANTS = {
         PAGE_SIZE_OPTIONS: [10, 25, 50, 100],
     },
 } as const;
+
+export const AUTHOR_CONSTANTS = {
+    NAME: 'Kien Nguyen',
+    PROFILE_PICTURE: '/pfp.jpg',
+    BIO: 'I like building stuffs',
+    TITLE: 'Web Developer/Computer Engineering major',
+} as const;

@@ -15,6 +15,14 @@ export const articleService = {
     },
 
     /**
+     * Get all public articles (no authentication required)
+     */
+    getAllPublic: async (): Promise<Article[]> => {
+        const response = await apiClient.get<Article[]>("/articles/public");
+        return response.data;
+    },
+
+    /**
      * Get a single article by slug
      * @param slug - Article slug
      * @param config - Optional axios config (e.g., for server-side auth headers)
