@@ -1,31 +1,15 @@
 "use client"
 
 import z from "zod"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Bold,
-  Italic,
-  Underline,
-  Strikethrough,
-  List,
-  ListOrdered,
-  Quote,
-  Code,
-  Link as LinkIcon,
-  Image as ImageIcon,
-} from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { articleService } from "@/features/articles/services/article.service"
 import { ROUTES } from "@/config/routes"
+import { TiptapEditor } from "./tiptap-editor"
+import { InputGroupButton, InputGroupAddon } from "@/components/ui/input-group"
 
 const articleSchema = z.object({
   title: z.string(),
@@ -46,7 +30,7 @@ const ComposeArticleForm = () => {
     }
   })
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, } = form;
+  const { register, handleSubmit, formState: { errors, isSubmitting }, control } = form;
 
   const onSubmit = async (data: ArticleForm) => {
     try {
@@ -99,47 +83,47 @@ const ComposeArticleForm = () => {
           {...register("tags")}
         />
       </div>
-      <Label
-        htmlFor="textarea-code-32"
-        className="block text-sm font-medium text-slate-700 dark:text-slate-200"
-      >
-        Content
-      </Label>
+      <div className="w-full mb-2">
+        <Label
+          htmlFor="content"
+          className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200"
+        >
+          Content
+        </Label>
 
-      <InputGroup className="w-full">
-        <InputGroupAddon align="block-start" className="border-b gap-1">
-          <InputGroupButton size="icon-sm" aria-label="Bold"><Bold /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Italic"><Italic /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Underline"><Underline /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Strikethrough"><Strikethrough /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Bullet List"><List /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Numbered List"><ListOrdered /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Blockquote"><Quote /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Code"><Code /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Link"><LinkIcon /></InputGroupButton>
-          <InputGroupButton size="icon-sm" aria-label="Image"><ImageIcon /></InputGroupButton>
-        </InputGroupAddon>
-        <InputGroupTextarea
-          id="content"
-          placeholder="console.log('Hello, world!');"
-          className="min-h-[200px] w-full"
-          {...register("content")}
+        <Controller
+          name="content"
+          control={control}
+          render={({ field }) => (
+            <TiptapEditor
+              content={field.value}
+              onChange={field.onChange}
+              placeholder="Write your article content here..."
+            />
+          )}
         />
 
-        <InputGroupAddon align="block-end" className="border-t">
-          <InputGroupButton size="sm" className="ml-auto" variant="default" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Posting..." : "Post"}
-          </InputGroupButton>
-        </InputGroupAddon>
-      </InputGroup>
+        {errors.content && (
+          <p className="text-sm text-red-600 mt-1">
+            {errors.content.message}
+          </p>
+        )}
+      </div>
 
-      {errors.content && (
-        <p className="text-sm text-red-600 mt-1">
-          {errors.content.message}
-        </p>
-      )}
+      <div className="flex justify-end">
+        <InputGroupButton
+          size="sm"
+          variant="default"
+          type="submit"
+          disabled={isSubmitting}
+          className="px-6"
+        >
+          {isSubmitting ? "Posting..." : "Post"}
+        </InputGroupButton>
+      </div>
     </form>
   )
 }
 
 export default ComposeArticleForm
+
