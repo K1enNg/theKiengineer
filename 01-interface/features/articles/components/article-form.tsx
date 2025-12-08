@@ -9,10 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { articleService } from "@/features/articles/services/article.service"
 import { ROUTES } from "@/config/routes"
 import { TiptapEditor } from "./tiptap-editor"
-import { InputGroupButton, InputGroupAddon } from "@/components/ui/input-group"
+import { InputGroupButton } from "@/components/ui/input-group"
 
 const articleSchema = z.object({
-  title: z.string(),
+  title: z.string().min(1, "Title is required"),
   content: z.string().min(10, "Content must be at least 10 characters"),
   tags: z.string().optional()
 })
@@ -26,7 +26,8 @@ const ComposeArticleForm = () => {
     resolver: zodResolver(articleSchema),
     defaultValues: {
       title: "",
-      content: ""
+      content: "",
+      tags: ""
     }
   })
 
@@ -34,19 +35,18 @@ const ComposeArticleForm = () => {
 
   const onSubmit = async (data: ArticleForm) => {
     try {
-      // const author = JSON.parse(localStorage.getItem("author") || "{}")
       const payload = {
         ...data,
         tags: data.tags ? data.tags.split(",").map(t => t.trim()) : [],
-        // authorId: author.id
       };
 
       await articleService.create(payload);
       router.push(ROUTES.ARTICLES.LIST);
     } catch (err) {
-      console.log("failed to create article: ", err)
+      console.error("Failed to create article: ", err)
     }
   }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -72,8 +72,12 @@ const ComposeArticleForm = () => {
           </p>
         )}
       </div>
+
       <div className="w-full mb-2">
-        <Label className="mb-2 block text-sm font-medium text-slate-700">
+        <Label
+          htmlFor="tags"
+          className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200"
+        >
           Tags (comma separated)
         </Label>
         <Input
@@ -83,6 +87,7 @@ const ComposeArticleForm = () => {
           {...register("tags")}
         />
       </div>
+
       <div className="w-full mb-2">
         <Label
           htmlFor="content"
@@ -126,4 +131,3 @@ const ComposeArticleForm = () => {
 }
 
 export default ComposeArticleForm
-
