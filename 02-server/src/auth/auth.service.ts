@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { AuthorsService } from 'src/authors/authors.service';
@@ -9,7 +9,7 @@ export class AuthService {
     constructor(
         private authorsService: AuthorsService,
         private jwtService: JwtService
-    ) {}
+    ) { }
 
     async validateAuthor(email: string, password: string): Promise<any> {
         const author = await this.authorsService.findByEmail(email);
@@ -53,6 +53,20 @@ export class AuthService {
         }
 
         const hashed = await bcrypt.hash(password, 10);
-        return this.authorsService.create({firstName, lastName, email, password: hashed});
+        return this.authorsService.create({ firstName, lastName, email, password: hashed });
+    }
+
+    async deleteAccount(userId: string) {
+        if (!userId) {
+            throw new UnauthorizedException("User ID is required");
+        }
+
+        const author = await this.authorsService.findById(userId);
+        if (!author) {
+            throw new NotFoundException("User not found");
+        }
+
+        await this.authorsService.remove(userId);
+        return { message: "Account deleted successfully" };
     }
 }

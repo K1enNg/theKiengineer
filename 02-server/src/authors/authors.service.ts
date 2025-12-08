@@ -10,7 +10,7 @@ export class AuthorsService {
   constructor(
     @InjectRepository(Author)
     private authorsRepository: Repository<Author>,
-  ) {}
+  ) { }
 
   async create(createAuthorDto: CreateAuthorDto) {
     const author = this.authorsRepository.create(createAuthorDto);
@@ -23,5 +23,9 @@ export class AuthorsService {
 
   async findById(id: string): Promise<Author | null> {
     return this.authorsRepository.findOne({ where: { id } });
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.authorsRepository.delete(id);
   }
 }
