@@ -13,6 +13,7 @@ const Navbar: React.FC = () => {
                     <div className="hidden md:flex space-x-6">
                         <Link href={ROUTES.BLOGS.LIST} className="transition-colors">Blogs</Link>
                         <Link href={ROUTES.ABOUT} className="transition-colors">About</Link>
+                        <Link href={ROUTES.COURSES} className="transition-colors">Courses</Link>
                     </div>
                 </div>
 

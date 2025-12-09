@@ -22,6 +22,8 @@ export const ROUTES = {
 
     ABOUT: '/about',
 
+    COURSES: '/courses',
+
     AUTH: {
         SIGNIN: '/auth/signin',
         SIGNUP: '/auth/signup',

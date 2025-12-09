@@ -22,12 +22,6 @@ export function BlogCard({ article }: BlogCardProps) {
         });
     };
 
-    // Extract first 150 characters from content as excerpt
-    const getExcerpt = (content: string) => {
-        const plainText = content.replace(/<[^>]*>/g, ""); // Remove HTML tags
-        return plainText.length > 150 ? plainText.substring(0, 150) + "..." : plainText;
-    };
-
     return (
         <Link href={ROUTES.BLOGS.VIEW(article.slug)} className="group block h-full">
             <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-border/50 hover:border-primary/50">
@@ -53,11 +47,6 @@ export function BlogCard({ article }: BlogCardProps) {
                     <h3 className="text-xl font-bold line-clamp-2 group-hover:text-primary transition-colors">
                         {article.title}
                     </h3>
-
-                    {/* Excerpt
-                    <p className="text-sm text-muted-foreground line-clamp-3">
-                        {getExcerpt(article.content)}
-                    </p> */}
                 </CardHeader>
 
                 <CardContent className="space-y-3">
