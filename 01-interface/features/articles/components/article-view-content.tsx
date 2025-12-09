@@ -1,32 +1,20 @@
-import Link from 'next/link'
-import { Calendar, Tag, ArrowLeft } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Calendar, Tag } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import type { Article } from '@/features/articles/types/article.types'
 import { formatDate } from '@/shared/utils/date.utils'
+import { Badge } from '@/components/ui/badge'
 
 interface ArticleViewContentProps {
     article: Article
-    backHref: string
 }
 
 /**
  * Pure presentation component for displaying article content
  * Receives article data as props and focuses solely on rendering
  */
-export const ArticleViewContent = ({ article, backHref }: ArticleViewContentProps) => {
+export const ArticleViewContent = ({ article }: ArticleViewContentProps) => {
     return (
-        <div className="w-12xl mx-auto px-4 sm:px-6 lg:px-10">
-            {/* Back Button */}
-            <div className="mb-6">
-                <Link href={backHref}>
-                    <Button variant="ghost" size="sm">
-                        <ArrowLeft className="mr-2 h-4 w-4" />
-                        Back to Articles
-                    </Button>
-                </Link>
-            </div>
+        <div className="w-12xl mx-auto px-4 sm:px-6 lg:px-10 mt-12">
 
             {/* Article Card */}
             <Card>
@@ -68,9 +56,7 @@ export const ArticleViewContent = ({ article, backHref }: ArticleViewContentProp
                 <CardContent>
                     {/* Article Content */}
                     <div className="prose prose-lg max-w-none">
-                        <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
-                            {article.content}
-                        </div>
+                        <div className="whitespace-pre-wrap text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: article.content }} />
                     </div>
 
                     {/* Footer Metadata */}
