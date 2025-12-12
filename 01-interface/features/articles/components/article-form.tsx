@@ -10,6 +10,7 @@ import { articleService } from "@/features/articles/services/article.service"
 import { ROUTES } from "@/config/routes"
 import { TiptapEditor } from "./tiptap-editor"
 import { InputGroupButton } from "@/components/ui/input-group"
+import { Article } from "../types/article.types"
 
 const articleSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -19,15 +20,19 @@ const articleSchema = z.object({
 
 type ArticleForm = z.infer<typeof articleSchema>;
 
-const ComposeArticleForm = () => {
+interface ComposeArticleFormProps {
+  initialData?: Article
+}
+
+const ComposeArticleForm = ({ initialData }: ComposeArticleFormProps) => {
   const router = useRouter();
 
   const form = useForm<ArticleForm>({
     resolver: zodResolver(articleSchema),
     defaultValues: {
-      title: "",
-      content: "",
-      tags: ""
+      title: initialData?.title || "",
+      content: initialData?.content || "",
+      tags: initialData?.tags.join(", ") || ""
     }
   })
 
@@ -40,10 +45,14 @@ const ComposeArticleForm = () => {
         tags: data.tags ? data.tags.split(",").map(t => t.trim()) : [],
       };
 
-      await articleService.create(payload);
+      if (initialData) {
+        await articleService.update(initialData.slug, payload);
+      } else {
+        await articleService.create(payload);
+      }
       router.push(ROUTES.ARTICLES.LIST);
     } catch (err) {
-      console.error("Failed to create article: ", err)
+      console.error("Failed to save article: ", err)
     }
   }
 
@@ -121,9 +130,8 @@ const ComposeArticleForm = () => {
           variant="default"
           type="submit"
           disabled={isSubmitting}
-          className="px-6"
         >
-          {isSubmitting ? "Posting..." : "Post"}
+          {isSubmitting ? "Saving..." : (initialData ? "Update" : "Post")}
         </InputGroupButton>
       </div>
     </form>
