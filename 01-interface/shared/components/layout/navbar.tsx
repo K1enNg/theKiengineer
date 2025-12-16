@@ -1,5 +1,8 @@
+"use client"
+
 import Link from 'next/link';
 import { Command, CommandInput, CommandList, CommandEmpty } from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
 import { ROUTES } from '@/config/routes';
 
 const Navbar: React.FC = () => {
@@ -24,9 +27,11 @@ const Navbar: React.FC = () => {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                    <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors">
-                        Subscribe
-                    </button>
+                    <Link href={ROUTES.SUBSCRIBE}>
+                        <Button className="bg-black text-white hover:bg-gray-800">
+                            Subscribe
+                        </Button>
+                    </Link>
                     <div>
                         <Link href={ROUTES.AUTH.SIGNIN} className="transition-colors text-color-gray-600">Are you author?</Link>
                     </div>

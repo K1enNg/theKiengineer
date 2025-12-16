@@ -23,6 +23,7 @@ export const ROUTES = {
     ABOUT: '/about',
 
     COURSES: '/courses',
+    SUBSCRIBE: '/subscribe',
 
     AUTH: {
         SIGNIN: '/auth/signin',
@@ -89,6 +90,11 @@ export const ROUTE_METADATA: Record<string, RouteMetadata> = {
     [ROUTES.BLOGS.LIST]: {
         title: 'Blogs',
         description: 'Read our latest articles',
+        requiresAuth: false,
+    },
+    [ROUTES.SUBSCRIBE]: {
+        title: 'Subscribe',
+        description: 'Subscribe to our newsletter',
         requiresAuth: false,
     },
 };

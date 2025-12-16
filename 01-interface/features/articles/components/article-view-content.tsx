@@ -1,20 +1,35 @@
-import { Calendar, Tag } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowLeft, Calendar, Tag } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import type { Article } from '@/features/articles/types/article.types'
 import { formatDate } from '@/shared/utils/date.utils'
 import { Badge } from '@/components/ui/badge'
 
 interface ArticleViewContentProps {
     article: Article
+    backHref?: string
 }
 
 /**
  * Pure presentation component for displaying article content
  * Receives article data as props and focuses solely on rendering
  */
-export const ArticleViewContent = ({ article }: ArticleViewContentProps) => {
+export const ArticleViewContent = ({ article, backHref }: ArticleViewContentProps) => {
     return (
         <div className="w-12xl mx-auto px-4 sm:px-6 lg:px-10 mt-12">
+
+            {/* Back Navigation */}
+            {backHref && (
+                <div className="mb-6">
+                    <Link href={backHref}>
+                        <Button variant="ghost" className="pl-0 hover:pl-2 transition-all gap-2">
+                            <ArrowLeft className="h-4 w-4" />
+                            Back
+                        </Button>
+                    </Link>
+                </div>
+            )}
 
             {/* Article Card */}
             <Card>
