@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "turbo": "^2.6.3"
+    "turbo": "^2.7.2"
   },
   "packageManager": "npm@8.16.0",
   "workspaces": [
