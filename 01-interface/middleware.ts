@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { ROUTES } from "@/lib/routes";
+import { ROUTES } from "./lib/routes";
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('access_token')?.value;
