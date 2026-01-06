@@ -1,6 +1,3 @@
--- CreateSchema
-CREATE SCHEMA IF NOT EXISTS "public";
-
 -- CreateTable
 CREATE TABLE "author" (
     "id" TEXT NOT NULL,
@@ -50,4 +47,3 @@ CREATE UNIQUE INDEX "subscriber_email_key" ON "subscriber"("email");
 
 -- AddForeignKey
 ALTER TABLE "article" ADD CONSTRAINT "article_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "author"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
