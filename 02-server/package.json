@@ -25,7 +25,8 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
     "prisma:seed": "ts-node prisma/seed.ts",
-    "prisma:reset": "prisma migrate reset"
+    "prisma:reset": "prisma migrate reset",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.1",

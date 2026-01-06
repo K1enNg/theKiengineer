@@ -1,9 +1,16 @@
 {
     "$schema": "https://turborepo.com/schema.json",
     "tasks": {
+        "prisma:generate": {
+            "cache": true,
+            "outputs": [
+                "generated/**"
+            ]
+        },
         "build": {
             "dependsOn": [
-                "^build"
+                "^build",
+                "prisma:generate"
             ],
             "outputs": [
                 ".next/**",
@@ -18,7 +25,10 @@
         },
         "dev": {
             "persistent": true,
-            "cache": false
+            "cache": false,
+            "dependsOn": [
+                "prisma:generate"
+            ]
         }
     }
 }
