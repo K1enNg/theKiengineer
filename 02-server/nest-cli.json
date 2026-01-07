@@ -10,7 +10,7 @@
         "watchAssets": true
       },
       {
-        "include": "generated/prisma/**/*",
+        "include": "generated/prisma/**/*.wasm",
         "outDir": "dist/src",
         "watchAssets": true
       }
