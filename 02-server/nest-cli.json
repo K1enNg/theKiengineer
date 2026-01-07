@@ -7,12 +7,7 @@
     "assets": [
       {
         "include": "**/*.hbs",
-        "watchAssets": true
-      },
-      {
-        "include": "generated/prisma/**/*.wasm",
-        "outDir": "dist/src",
-        "watchAssets": true
+        "outDir": "dist/src"
       }
     ]
   }
