@@ -10,8 +10,8 @@
         "watchAssets": true
       },
       {
-        "include": "../generated/**/*",
-        "outDir": "dist/generated",
+        "include": "generated/prisma/**/*",
+        "outDir": "dist/src",
         "watchAssets": true
       }
     ]
