@@ -16,9 +16,19 @@ const getEnvVar = (key: string, defaultValue?: string): string => {
     return value;
 };
 
+// Only use localhost default in development
+const getApiUrl = (): string => {
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    if (isDevelopment) {
+        return getEnvVar('NEXT_PUBLIC_API_URL', 'http://localhost:5000');
+    }
+    // In production, require the environment variable to be set
+    return getEnvVar('NEXT_PUBLIC_API_URL');
+};
+
 const env = {
     // API Configuration
-    apiUrl: getEnvVar('NEXT_PUBLIC_API_URL', 'http://localhost:5000'),
+    apiUrl: getApiUrl(),
 
     // Environment
     isDevelopment: process.env.NODE_ENV === 'development',
